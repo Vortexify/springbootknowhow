@@ -14,26 +14,19 @@ public class EmploymentHistoryService {
     }
 
     public EmploymentHistory getEmploymentById(Long employmentId) {
-        return employmentRepository.findById(employmentId).orElse(null);
+        return employmentRepository.findById(employmentId);
     }
 
-    public EmploymentHistory createEmployment(EmploymentHistory employment) {
+    public long createEmployment(EmploymentHistory employment) {
         return employmentRepository.save(employment);
     }
 
-    public EmploymentHistory updateEmployment(Long companyId, EmploymentHistory updatedCompany) {
-        EmploymentHistory existingEmployment = employmentRepository.findById(companyId).orElse(null);
-        if (existingEmployment != null) {
-            existingEmployment.setEmployeeId(updatedCompany.getEmployeeId());
-            existingEmployment.setWorkplaceId(updatedCompany.getWorkplaceId());
-            existingEmployment.setStartDate(updatedCompany.getStartDate());
-            existingEmployment.setEndDate(updatedCompany.getEndDate());
-            return employmentRepository.save(existingEmployment);
-        }
-        return null;
+    public EmploymentHistory updateEmployment(EmploymentHistory employment) {
+        return employmentRepository.update(employment);
     }
 
-    public void deleteEmployment(Long employmentId) {
+    public void deleteEmployment(Long employmentId)
+    {
         employmentRepository.deleteById(employmentId);
     }
 }

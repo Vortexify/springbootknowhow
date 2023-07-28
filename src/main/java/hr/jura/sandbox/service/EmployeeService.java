@@ -14,20 +14,15 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeById(Long employeeId) {
-        return employeeRepository.findById(employeeId).orElse(null);
+        return employeeRepository.findById(employeeId);
     }
 
-    public Employee createEmployee(Employee employee) {
+    public long createEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
 
-    public Employee updateEmployee(Long employeeId, Employee updatedEmployee) {
-        Employee existingEmployee = employeeRepository.findById(employeeId).orElse(null);
-        if (existingEmployee != null) {
-            existingEmployee.setEmployeeName(updatedEmployee.getEmployeeName());
-            return employeeRepository.save(existingEmployee);
-        }
-        return null;
+    public Employee updateEmployee(Employee employee) {
+        return employeeRepository.update(employee);
     }
 
     public void deleteEmployee(Long employeeId) {

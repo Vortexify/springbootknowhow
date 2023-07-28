@@ -13,23 +13,18 @@ public class CompanyService {
     }
 
     public Company getCompanyById(Long companyId) {
-        return companyRepository.findById(companyId).orElse(null);
+        return companyRepository.findById(companyId);
     }
 
-    public Company createCompany(Company company) {
+    public long createCompany(Company company) {
         return companyRepository.save(company);
     }
 
-    public Company updateCompany(Long companyId, Company updatedCompany) {
-        Company existingCompany = companyRepository.findById(companyId).orElse(null);
-        if (existingCompany != null) {
-            existingCompany.setCompanyName(updatedCompany.getCompanyName());
-            return companyRepository.save(existingCompany);
-        }
-        return null;
+    public Company updateCompany(Company company) {
+       return companyRepository.update(company);
     }
 
-    public void deleteCompany(Long companyId) {
+    public void deleteCompany(long companyId) {
         companyRepository.deleteById(companyId);
     }
 }

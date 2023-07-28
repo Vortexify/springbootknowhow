@@ -25,12 +25,12 @@ public class EmployeeController {
 
     @PostMapping
     public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeService.createEmployee(employee);
+        return null;
     }
 
     @PutMapping("/{employeeId}")
-    public Employee updateEmployee(@PathVariable Long employeeId, @RequestBody Employee updatedEmployee) {
-        return employeeService.updateEmployee(employeeId, updatedEmployee);
+    public Employee updateEmployee(@RequestBody Employee employee) {
+        return employeeService.updateEmployee(employee);
     }
 
     @DeleteMapping("/{employeeId}")

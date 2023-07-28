@@ -21,12 +21,12 @@ public class WorkplaceController {
 
     @PostMapping
     public Workplace createWorkplace(@RequestBody Workplace workplace) {
-        return workplaceService.createWorkplace(workplace);
+        return null;
     }
 
     @PutMapping("/{workplaceId}")
-    public Workplace updateWorkplace(@PathVariable Long workplaceId, @RequestBody Workplace updatedWorkplace) {
-        return workplaceService.updateWorkplace(workplaceId, updatedWorkplace);
+    public Workplace updateWorkplace(@RequestBody Workplace workplace) {
+        return workplaceService.updateWorkplace(workplace);
     }
 
     @DeleteMapping("/{workplaceId}")

@@ -22,12 +22,12 @@ public class CompanyController {
 
     @PostMapping
     public Company createCompany(@RequestBody Company company) {
-        return companyService.createCompany(company);
+        return null;
     }
 
     @PutMapping("/{companyId}")
-    public Company updateCompany(@PathVariable Long companyId, @RequestBody Company updatedCompany) {
-        return companyService.updateCompany(companyId, updatedCompany);
+    public Company updateCompany(@RequestBody Company company) {
+        return companyService.updateCompany(company);
     }
 
     @DeleteMapping("/{companyId}")

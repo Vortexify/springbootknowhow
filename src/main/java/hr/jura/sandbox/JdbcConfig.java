@@ -1,65 +1,51 @@
 package hr.jura.sandbox;
 
-import oracle.ucp.jdbc.PoolDataSource;
-import oracle.ucp.jdbc.PoolDataSourceFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 
 @Configuration
 public class JdbcConfig {
-    @Value("${spring.datasource.url}")
-    private String url;
-    @Value("${spring.datasource.username}")
-    private String username;
-    @Value("${spring.datasource.password}")
-    private String password;
-    @Value("${oracle.ucp.minPoolSize}")
-    private String minPoolSize;
-
-    @Value("${oracle.ucp.maxPoolSize}")
-    private String maxPoolSize;
-
-    @Value("${spring.datasource.driver-class-name:oracle.jdbc.pool.OracleDataSource}")
-    private String driverClassName;
-
-    @Bean(name = "OracleUniversalConnectionPool")
-    @Primary
-    public DataSource getDataSource() {
-        PoolDataSource pds = null;
-        try {
-            pds = PoolDataSourceFactory.getPoolDataSource();
-
-            pds.setConnectionFactoryClassName(driverClassName);
-            pds.setURL(url);
-            pds.setUser(username);
-            pds.setPassword(password);
-            pds.setMinPoolSize(Integer.valueOf(minPoolSize));
-            pds.setInitialPoolSize(10);
-            pds.setMaxPoolSize(Integer.valueOf(maxPoolSize));
-
-        } catch (SQLException ea) {
-            System.err.println("Error connecting to the database: " + ea.getMessage());
-        }
-
-        return pds;
-    }
-    /*private final DataSource dataSource;
-
-    @Autowired
-    public JdbcConfig(DataSourceProperties dataSourceProperties) {
-        this.dataSource = dataSourceProperties.initializeDataSourceBuilder().build();
-    }
 
     @Bean
-    public JdbcTemplate jdbcTemplate() {
-        return new JdbcTemplate(dataSource);
-    }*/
+    @Primary
+    @ConfigurationProperties("spring.datasource")
+    public DataSourceProperties primaryDataSourceProperties() {
+        return new DataSourceProperties();
+    }
+
+    @Bean("primaryDS")
+    @Primary
+    @ConfigurationProperties("spring.datasource.hikari")
+    public HikariDataSource primaryHikariDataSource() {
+        HikariDataSource ds = primaryDataSourceProperties().initializeDataSourceBuilder().type(HikariDataSource.class).build();
+        ds.setConnectionInitSql("alter session set nls_sort=GENERIC_M_CI");
+        return ds;
+    }
+
+    @Bean("primaryJdbcTemplate")
+    @Primary
+    public JdbcTemplate primaryJdbcTemplate(@Qualifier("primaryDS") DataSource ds) {
+        JdbcTemplate template = new JdbcTemplate(ds);
+        template.setQueryTimeout(120);
+        return template;
+    }
+
+    @Bean("namedParameterJdbcTemplate")
+    @Primary
+    public NamedParameterJdbcTemplate namedParameterJdbcTemplate(@Qualifier("primaryDS") DataSource ds) {
+        JdbcTemplate template = new JdbcTemplate(ds);
+        template.setQueryTimeout(120);
+        return new NamedParameterJdbcTemplate(template);
+
+    }
+
 }

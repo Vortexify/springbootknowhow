@@ -21,12 +21,12 @@ public class EmploymentHistoryController {
 
     @PostMapping
     public EmploymentHistory createEmploymentHistory(@RequestBody EmploymentHistory employmentHistory) {
-        return employmentHistoryService.createEmployment(employmentHistory);
+        return null;
     }
 
     @PutMapping("/{employmentHistoryId}")
-    public EmploymentHistory updateEmploymentHistory(@PathVariable Long employmentHistoryId, @RequestBody EmploymentHistory updatedEmploymentHistory) {
-        return employmentHistoryService.updateEmployment(employmentHistoryId, updatedEmploymentHistory);
+    public EmploymentHistory updateEmploymentHistory(@RequestBody EmploymentHistory employmentHistory) {
+        return employmentHistoryService.updateEmployment(employmentHistory);
     }
 
     @DeleteMapping("/{employmentHistoryId}")

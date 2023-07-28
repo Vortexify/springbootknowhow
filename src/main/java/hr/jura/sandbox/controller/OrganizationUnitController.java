@@ -21,12 +21,12 @@ public class OrganizationUnitController {
 
     @PostMapping
     public OrganizationUnit createOrganizationUnit(@RequestBody OrganizationUnit organizationUnit) {
-        return organizationUnitService.createOrganizationUnit(organizationUnit);
+        return null;
     }
 
     @PutMapping("/{organizationUnitId}")
-    public OrganizationUnit updateOrganizationUnit(@PathVariable Long organizationUnitId, @RequestBody OrganizationUnit updatedOrganizationUnit) {
-        return organizationUnitService.updateOrganizationUnit(organizationUnitId, updatedOrganizationUnit);
+    public OrganizationUnit updateOrganizationUnit(@RequestBody OrganizationUnit organizationUnit) {
+        return organizationUnitService.updateOrganizationUnit(organizationUnit);
     }
 
     @DeleteMapping("/{organizationUnitId}")

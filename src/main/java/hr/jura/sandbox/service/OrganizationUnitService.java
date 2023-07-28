@@ -14,20 +14,15 @@ public class OrganizationUnitService {
     }
 
     public OrganizationUnit getOrganizationUnitById(Long organizationUnitId) {
-        return organizationUnitRepository.findById(organizationUnitId).orElse(null);
+        return organizationUnitRepository.findById(organizationUnitId);
     }
 
-    public OrganizationUnit createOrganizationUnit(OrganizationUnit organizationUnit) {
+    public long createOrganizationUnit(OrganizationUnit organizationUnit) {
         return organizationUnitRepository.save(organizationUnit);
     }
 
-    public OrganizationUnit updateOrganizationUnit(Long organizationUnitId, OrganizationUnit updatedOrganizationUnit) {
-        OrganizationUnit existingOrganizationUnit = organizationUnitRepository.findById(organizationUnitId).orElse(null);
-        if (existingOrganizationUnit != null) {
-            existingOrganizationUnit.setUnitName(updatedOrganizationUnit.getUnitName());
-            return organizationUnitRepository.save(existingOrganizationUnit);
-        }
-        return null;
+    public OrganizationUnit updateOrganizationUnit(OrganizationUnit organizationUnit) {
+        return organizationUnitRepository.update(organizationUnit);
     }
 
     public void deleteOrganizationUnit(Long organizationUnitId) {

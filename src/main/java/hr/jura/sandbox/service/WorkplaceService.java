@@ -14,20 +14,15 @@ public class WorkplaceService {
     }
 
     public Workplace getWorkplaceById(Long workplaceId) {
-        return workplaceRepository.findById(workplaceId).orElse(null);
+        return workplaceRepository.findById(workplaceId);
     }
 
-    public Workplace createWorkplace(Workplace workplace) {
+    public long createWorkplace(Workplace workplace) {
         return workplaceRepository.save(workplace);
     }
 
-    public Workplace updateWorkplace(Long workplaceId, Workplace updatedWorkplace) {
-        Workplace existingWorkplace = workplaceRepository.findById(workplaceId).orElse(null);
-        if (existingWorkplace != null) {
-            existingWorkplace.setWorkplaceName(updatedWorkplace.getWorkplaceName());
-            return workplaceRepository.save(existingWorkplace);
-        }
-        return null;
+    public Workplace updateWorkplace(Workplace workplace) {
+        return workplaceRepository.update(workplace);
     }
 
     public void deleteWorkplace(Long workplaceId) {

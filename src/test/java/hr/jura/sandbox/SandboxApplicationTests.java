@@ -13,10 +13,24 @@ class SandboxApplicationTests {
 
 	@Autowired
 	CompanyService companyService;
+
 	@Test
-	void contextLoads() {
+	void getCompany() {
 		Company company = companyService.getCompanyById(1L);
 		log.info(company.getCompanyName());
+	}
+
+	@Test
+	void saveCompany() {
+		Company company = new Company(-1L, "Firma xyz");
+		companyService.createCompany(company);
+		companyService.updateCompany(company);
+	}
+
+	@Test
+	void deleteCompany(){
+		Company company = companyService.getCompanyById(22L);
+		companyService.deleteCompany(company.getCompanyId());
 	}
 
 }
