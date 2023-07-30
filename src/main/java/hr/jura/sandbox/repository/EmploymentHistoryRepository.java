@@ -3,8 +3,6 @@ import hr.jura.sandbox.model.Employee;
 import hr.jura.sandbox.model.EmploymentHistory;
 import org.apache.catalina.util.ParameterMap;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
